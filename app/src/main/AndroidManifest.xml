@@ -9,15 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".EditProfileActivity" android:label="Edit Profile"/>
-        <activity android:name=".LoginActivity" android:label="Login">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="Edit Profile" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DaftarActivity" android:label="Daftar"></activity>
+        <activity
+            android:name=".DaftarActivity"
+            android:label="Daftar" />
+        <activity android:name=".EditNutrisiActivity"></activity>
     </application>
 
 </manifest>

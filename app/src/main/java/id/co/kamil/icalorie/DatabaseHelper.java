@@ -3,6 +3,7 @@ package id.co.kamil.icalorie;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by Irham on 12/5/2017.
@@ -36,18 +37,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     DatabaseContract.Pengguna.PENGGUNA_COL_KELAMIN,
                     DatabaseContract.Pengguna.PENGGUNA_COL_TELP
             );
-
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public static final String CREATE_TABLE_NUTRISI =
+            String.format("CREATE TABLE %s " +
+                            "(%s INTEGER PRIMARY KEY," +
+                            "%s VARCHAR(30)," +
+                            "%s DECIMAL(10,2)," +
+                            "%s DECIMAL(10,2)," +
+                            "%s DECIMAL(10,2)," +
+                            "%s DECIMAL(10,2)," +
+                            "%s DECIMAL(10,2)," +
+                            "%s DECIMAL(10,2)," +
+                            "%s DECIMAL(10,2))",
+                    DatabaseContract.Nutrisi.TABLE_NUTRISI,
+                    DatabaseContract.Nutrisi._ID,
+                    DatabaseContract.Nutrisi.NUTRISI_COL_NAMA,
+                    DatabaseContract.Nutrisi.NUTRISI_COL_BERAT,
+                    DatabaseContract.Nutrisi.NUTRISI_COL_KALORI,
+                    DatabaseContract.Nutrisi.NUTRISI_COL_KARBOHIDRAT,
+                    DatabaseContract.Nutrisi.NUTRISI_COL_PROTEIN,
+                    DatabaseContract.Nutrisi.NUTRISI_COL_VIT_A,
+                    DatabaseContract.Nutrisi.NUTRISI_COL_VIT_B,
+                    DatabaseContract.Nutrisi.NUTRISI_COL_VIT_C
+            );
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        Log.i(TAG,"Cerating database");
+        db.execSQL(CREATE_TABLE_PENGGUNA);
+        db.execSQL(CREATE_TABLE_NUTRISI);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        Log.i(TAG,"Deleting Table");
+        db.execSQL("DELETE FROM " + DatabaseContract.Pengguna.TABLE_PENGGUNA);
+        db.execSQL("DELETE FROM " + DatabaseContract.Nutrisi.TABLE_NUTRISI);
+        onCreate(db);
     }
 }

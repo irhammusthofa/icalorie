@@ -1,11 +1,15 @@
 package id.co.kamil.icalorie;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -79,9 +83,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_insert:
+                if (tabLayout.getSelectedTabPosition()==4){
+                    Intent intent = new Intent(getBaseContext(),EditNutrisiActivity.class);
+                    intent.putExtra("Type",0);
+                    startActivityForResult(intent,1);
+                }
                 break;
             case R.id.menu_edit:
                 if (tabLayout.getSelectedTabPosition()==0){
@@ -89,6 +106,26 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.menu_logout:
+                AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
+                alBuilder.setTitle("Logout");
+                alBuilder.setMessage("Apakah anda yakin akan keluar dari aplikasi ?");
+                alBuilder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i(TAG,"Sedang proses Logout");
+                        // TODO: Clear Session
+
+                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                        finish();
+                    }
+                });
+                alBuilder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                alBuilder.show();
                 break;
             default:
                 break;
