@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private Menu menu=null;
     private TabLayout tabLayout;
+    private SessionManager session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        session = new SessionManager(getApplicationContext());
+        if (!session.checkLogin()){
+            session.login();
+            finish();
+        }
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_account_circle_black_24dp));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_queue_play_next_black_24dp));
@@ -114,8 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.i(TAG,"Sedang proses Logout");
                         // TODO: Clear Session
-
-                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                        session.logoutUser();
                         finish();
                     }
                 });

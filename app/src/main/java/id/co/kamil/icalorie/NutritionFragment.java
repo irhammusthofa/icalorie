@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +45,31 @@ public class NutritionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("kalori",txtKalori.getText().toString());
+        outState.putString("karbohidrat",txtKarbohidrat.getText().toString());
+        outState.putString("protein",txtProtein.getText().toString());
+        outState.putString("vita",txtVitA.getText().toString());
+        outState.putString("vitb",txtVitB.getText().toString());
+        outState.putString("vitc",txtVitC.getText().toString());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null){
+            txtKalori.setText(savedInstanceState.getString("kalori"));
+            txtKarbohidrat.setText(savedInstanceState.getString("karbohidrat"));
+            txtProtein.setText(savedInstanceState.getString("protein"));
+            txtVitA.setText(savedInstanceState.getString("vita"));
+            txtVitB.setText(savedInstanceState.getString("vitb"));
+            txtVitC.setText(savedInstanceState.getString("vitc"));
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
