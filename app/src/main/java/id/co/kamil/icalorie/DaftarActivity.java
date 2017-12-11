@@ -1,6 +1,7 @@
 package id.co.kamil.icalorie;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,14 +63,35 @@ public class DaftarActivity extends AppCompatActivity {
                     tempGender = "P";
                 }
                 values.put(DatabaseContract.Pengguna.PENGGUNA_COL_KELAMIN,tempGender);
-                Log.i(TAG,"Inserting data " + values);
-                db.insert(DatabaseContract.Pengguna.TABLE_PENGGUNA,null,values);
-                Toast.makeText(getApplicationContext(), "Pendaftaran berhasil, silahkan Login menggunakan email dan password yang telah anda daftarkan", Toast.LENGTH_SHORT).show();
-                finish();
+                if (!checkEmail(edtEmail.getText().toString())){
+                    Log.i(TAG,"Inserting data " + values);
+                    db.insert(DatabaseContract.Pengguna.TABLE_PENGGUNA,null,values);
+                    Toast.makeText(getApplicationContext(), "Pendaftaran berhasil, silahkan Login menggunakan email dan password yang telah anda daftarkan", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Email yang anda masukan sudah terdaftar", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
-
+    public boolean checkEmail(String email){
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+        final Cursor cursor = db.rawQuery(String.format(
+                "SELECT * FROM %s WHERE %s=?",DatabaseContract.Pengguna.TABLE_PENGGUNA,DatabaseContract.Pengguna.PENGGUNA_COL_EMAIL
+        ),new String[]{email});
+        boolean status = false;
+        if (cursor != null){
+            try {
+                if (cursor.getCount()>0){
+                    status = true;
+                }
+            }finally {
+                Log.i(TAG,"cursor close");
+                cursor.close();
+            }
+        }
+        return status;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
