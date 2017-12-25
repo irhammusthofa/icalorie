@@ -31,7 +31,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         dbHelper = new DatabaseHelper(this);
-        Id = getIntent().getStringExtra("Id");
+        Id = getIntent().getStringExtra("id");
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         edtNama = (EditText) findViewById(R.id.edtNama);
         edtBerat = (EditText) findViewById(R.id.edtNama);
