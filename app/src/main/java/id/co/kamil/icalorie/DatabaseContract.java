@@ -41,6 +41,7 @@ public class DatabaseContract {
     }
     public class RangeKalori implements BaseColumns{
         public static final String TABLE_RANGE_KALORI = "tb_range_kalori";
+        public static final String RK_COL_KODE = "rk_kode";
         public static final String RK_COL_NAMA = "rk_nama";
         public static final String RK_COL_BERAT_SAJI = "rk_berat";
         public static final String RK_COL_KALORI = "rk_kalori";

@@ -26,7 +26,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class ExerciseActivity extends AppCompatActivity {
 
@@ -69,6 +72,7 @@ public class ExerciseActivity extends AppCompatActivity {
     int secondsLimit = 30,caloriesLimit = 60;
     long lengthTime;
     private Button btnStop;
+    private long currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,8 @@ public class ExerciseActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Exercise Mode");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
         handler = new Handler() ;
         btnMulai = (Button) findViewById(R.id.btnStart);
         btnStop = (Button) findViewById(R.id.btnStop);
@@ -84,7 +90,6 @@ public class ExerciseActivity extends AppCompatActivity {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimeBuff += MillisecondTime;
                 handler.removeCallbacks(runnable);
                 berhentiSejenak();
                 mCaloriesValueView.setText(String.format("%.2f",caloriesCalculator.Calculate(-1)));
@@ -94,8 +99,8 @@ public class ExerciseActivity extends AppCompatActivity {
                 intent.putExtra("steps",mStepValue);
                 intent.putExtra("type",TypeExercise);
                 intent.putExtra("lengthTime",lengthTime);
-                intent.putExtra("startTime",StartTime);
-                startActivity(intent);
+                intent.putExtra("startTime",currentDate);
+                startActivityForResult(intent,1);
                 finish();
             }
         });
@@ -103,7 +108,11 @@ public class ExerciseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (btnMulai.getText().equals("Start")){
+                    Calendar calendar = Calendar.getInstance();
+                    currentDate = calendar.getTimeInMillis();
+                    Log.i(TAG, String.valueOf(currentDate));
                     StartTime = SystemClock.uptimeMillis();
+
                     handler.postDelayed(runnable, 0);
                     btnMulai.setText("Pause");
                     btnStop.setEnabled(true);
@@ -199,7 +208,7 @@ public class ExerciseActivity extends AppCompatActivity {
             Seconds = Seconds % 60;
             MilliSeconds = (int) (UpdateTime % 1000);
 
-            lengthTime = UpdateTime;
+            lengthTime = MillisecondTime;
 
             txtTime.setText("" + String.format("%02d",Hours ) + ":"
                     + String.format("%02d",Minutes ) + ":"

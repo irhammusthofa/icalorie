@@ -24,7 +24,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private ImageView imgProfile;
     private Button btnSimpan,btnCamera,btnGallery;
     private String Id;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +74,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     Log.i(TAG,"Inserting data");
                     db.update(DatabaseContract.Pengguna.TABLE_PENGGUNA,values,String.format("%s = ?",DatabaseContract.Pengguna._ID),new String[]{Id});
                     Toast.makeText(getApplicationContext(),"Profile berhasil diupdate.",Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

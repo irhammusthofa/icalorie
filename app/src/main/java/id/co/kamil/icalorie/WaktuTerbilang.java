@@ -1,5 +1,6 @@
 package id.co.kamil.icalorie;
 
+
 import java.util.Date;
 
 /**
@@ -7,24 +8,30 @@ import java.util.Date;
  */
 
 public class WaktuTerbilang {
+    long MillisecondTime, TimeBuff, UpdateTime = 0L ;
+    int Seconds, Minutes, MilliSeconds,Hours ;
 
     public String convert(long time){
-        Date date = new Date(time);
-        final int jam = date.getHours();
-        final int menit = date.getMinutes();
-        final int detik = date.getSeconds();
+
+        UpdateTime = TimeBuff + time;
+        Seconds = (int) (UpdateTime / 1000);
+        Hours = Minutes / 60;
+        Minutes = Seconds / 60;
+        Seconds = Seconds % 60;
+        MilliSeconds = (int) (UpdateTime % 1000);
+
 
         String narasi = "";
-        if (jam>0 && menit > 0){
-            narasi = String.valueOf(jam) + " jam " + String.valueOf(menit) + " menit ";
-        }else if (jam > 0 && menit ==0){
-            narasi = String.valueOf(jam) + " jam ";
-        }else if(menit>0 && detik >0){
-            narasi = String.valueOf(menit) + " menit " + String.valueOf(detik) + " detik";
-        }else if(menit>0 && detik == 0){
-            narasi = String.valueOf(menit) + " menit ";
+        if (Hours>0 && Minutes > 0){
+            narasi = String.valueOf(Hours) + " jam " + String.valueOf(Minutes) + " menit ";
+        }else if (Hours > 0 && Minutes ==0){
+            narasi = String.valueOf(Hours) + " jam ";
+        }else if(Minutes>0 && Seconds >0){
+            narasi = String.valueOf(Minutes) + " menit " + String.valueOf(Seconds) + " detik";
+        }else if(Minutes>0 && Seconds == 0){
+            narasi = String.valueOf(Minutes) + " menit ";
         }else{
-            narasi = String.valueOf(detik) + " detik ";
+            narasi = String.valueOf(Seconds) + " detik ";
         }
 
         return narasi;

@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.sql.SQLException;
+
 /**
  * Created by Irham on 12/5/2017.
  */
@@ -59,24 +61,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     DatabaseContract.Nutrisi.NUTRISI_COL_VIT_B,
                     DatabaseContract.Nutrisi.NUTRISI_COL_VIT_C
             );
-    public static final String CREATE_TABLE_KALORI =
-            String.format("CREATE TABLE %s " +
-                    "(%s INTEGER PRIMARY KEY," +
-                    "%s VARCHAR(30)," +
-                    "%s DECIMAL(10,2)," +
-                    "%s DECIMAL(10,2)," +
-                    "%s DECIMAL(10,2)," +
-                    "%s DECIMAL(10,2)," +
-                    "%s INTEGER)",
-                    DatabaseContract.RangeKalori.TABLE_RANGE_KALORI,
-                    DatabaseContract.RangeKalori._ID,
-                    DatabaseContract.RangeKalori.RK_COL_NAMA,
-                    DatabaseContract.RangeKalori.RK_COL_BERAT_SAJI,
-                    DatabaseContract.RangeKalori.RK_COL_KALORI,
-                    DatabaseContract.RangeKalori.RK_COL_KALORI_AWAL,
-                    DatabaseContract.RangeKalori.RK_COL_KALORI_AKHIR,
-                    DatabaseContract.RangeKalori.RK_COL_ID_PARENT
-            );
     public static final String CREATE_TABLE_EXERCISE =
             String.format("CREATE TABLE %s " +
                             "(%s INTEGER PRIMARY KEY," +
@@ -95,7 +79,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     DatabaseContract.Exercise.EXERCISE_COL_LENGTH_TIME,
                     DatabaseContract.Exercise.EXERCISE_COL_START_DATE
             );
-    public static final String INSERT_TABLE_RANGE_CALORIES = "";
+    public static final String CREATE_TABLE_KALORI =
+            String.format("CREATE TABLE %s " +
+                    "(%s INTEGER PRIMARY KEY," +
+                    "%s VARCHAR(5)," +
+                    "%s VARCHAR(30)," +
+                    "%s DECIMAL(10,2)," +
+                    "%s DECIMAL(10,2)," +
+                    "%s DECIMAL(10,2)," +
+                    "%s DECIMAL(10,2)," +
+                    "%s INTEGER)",
+                    DatabaseContract.RangeKalori.TABLE_RANGE_KALORI,
+                    DatabaseContract.RangeKalori._ID,
+                    DatabaseContract.RangeKalori.RK_COL_KODE,
+                    DatabaseContract.RangeKalori.RK_COL_NAMA,
+                    DatabaseContract.RangeKalori.RK_COL_BERAT_SAJI,
+                    DatabaseContract.RangeKalori.RK_COL_KALORI,
+                    DatabaseContract.RangeKalori.RK_COL_KALORI_AWAL,
+                    DatabaseContract.RangeKalori.RK_COL_KALORI_AKHIR,
+                    DatabaseContract.RangeKalori.RK_COL_ID_PARENT
+            );
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
