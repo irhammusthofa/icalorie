@@ -44,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.isEmpty() && password.isEmpty()){
                     Toast.makeText(getApplicationContext(),"Email atau Password masih kosong",Toast.LENGTH_SHORT).show();
                 }else{
+                    /*startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    finish();*/
                     doLogin();
                 }
             }

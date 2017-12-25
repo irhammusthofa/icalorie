@@ -69,14 +69,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void changeMenu(int position){
-        menu.findItem(R.id.menu_logout).setVisible(true);
-        menu.findItem(R.id.menu_edit).setVisible(false);
-        menu.findItem(R.id.menu_insert).setVisible(false);
-        menu.findItem(R.id.menu_delete).setVisible(false);
-        if (position==0){
-            menu.findItem(R.id.menu_edit).setVisible(true);
-        }else if (position==4) {
-            menu.findItem(R.id.menu_insert).setVisible(true);
+        try {
+            menu.findItem(R.id.menu_logout).setVisible(true);
+            menu.findItem(R.id.menu_edit).setVisible(false);
+            menu.findItem(R.id.menu_insert).setVisible(false);
+            menu.findItem(R.id.menu_delete).setVisible(false);
+            menu.findItem(R.id.menu_setting).setVisible(false);
+            if (position==0){
+                menu.findItem(R.id.menu_edit).setVisible(true);
+            }else if (position==2) {
+                menu.findItem(R.id.menu_setting).setVisible(true);
+            }else if (position==4) {
+                menu.findItem(R.id.menu_insert).setVisible(true);
+            }
+        }catch (Exception e){
+            Log.i(TAG,e.getMessage());
         }
     }
     @Override
@@ -110,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
                 if (tabLayout.getSelectedTabPosition()==0){
                     startActivity(new Intent(this,EditProfileActivity.class));
                 }
+                break;
+            case R.id.menu_setting:
+                startActivity(new Intent(this, Settings.class));
                 break;
             case R.id.menu_logout:
                 AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);

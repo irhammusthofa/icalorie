@@ -33,41 +33,41 @@
                 android:dialogTitle="@string/units_setting_title"
                 android:defaultValue="imperial" />
 
-        <name.bagi.levente.pedometer.preferences.StepLengthPreference
+        <id.co.kamil.icalorie.preferences.StepLengthPreference
                 android:key="step_length"
                 android:title="@string/step_length_setting"
                 android:summary="@string/step_length_setting_details"
                 android:dialogTitle="@string/step_length_setting_title"
                 android:defaultValue="20" />
             
-        <name.bagi.levente.pedometer.preferences.BodyWeightPreference
+        <!--<id.co.kamil.icalorie.preferences.BodyWeightPreference
                 android:key="body_weight"
                 android:title="@string/body_weight_setting"
                 android:summary="@string/body_weight_setting_details"
                 android:dialogTitle="@string/body_weight_setting_title"
-                android:defaultValue="50" />
+                android:defaultValue="50" />-->
             
-        <ListPreference
+        <!--<ListPreference
                 android:key="exercise_type"
                 android:title="@string/exercise_type_setting"
                 android:summary="@string/exercise_type_setting_details"
                 android:entries="@array/exercise_type_preference"
                 android:entryValues="@array/exercise_type_preference_values"
                 android:dialogTitle="@string/exercise_type_setting_title"
-                android:defaultValue="running" />
+                android:defaultValue="running" />-->
                 
-        <ListPreference
+        <!--<ListPreference
                 android:key="maintain"
                 android:title="@string/maintain_setting"
                 android:summary="@string/maintain_setting_details"
                 android:entries="@array/maintain_preference"
                 android:entryValues="@array/maintain_preference_values"
                 android:dialogTitle="@string/maintain_setting_title"
-                android:defaultValue="none" />
+                android:defaultValue="none" />-->
 
     </PreferenceCategory>
                 
-    <PreferenceCategory
+    <!--<PreferenceCategory
             android:title="@string/voice_settings_title">
         <CheckBoxPreference
                 android:key="speak"
@@ -124,7 +124,7 @@
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
-
+-->
 
     
 </PreferenceScreen>

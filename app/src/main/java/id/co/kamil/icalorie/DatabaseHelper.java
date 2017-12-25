@@ -12,7 +12,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
     public static final String DATABASE_NAME = "icalori.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String CREATE_TABLE_PENGGUNA =
             String.format("CREATE TABLE %s " +
                     "(%s INTEGER PRIMARY KEY," +
@@ -59,6 +59,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     DatabaseContract.Nutrisi.NUTRISI_COL_VIT_B,
                     DatabaseContract.Nutrisi.NUTRISI_COL_VIT_C
             );
+    public static final String CREATE_TABLE_KALORI =
+            String.format("CREATE TABLE %s " +
+                    "(%s INTEGER PRIMARY KEY," +
+                    "%s VARCHAR(30)," +
+                    "%s DECIMAL(10,2)," +
+                    "%s DECIMAL(10,2)," +
+                    "%s DECIMAL(10,2)," +
+                    "%s DECIMAL(10,2)," +
+                    "%s INTEGER)",
+                    DatabaseContract.RangeKalori.TABLE_RANGE_KALORI,
+                    DatabaseContract.RangeKalori._ID,
+                    DatabaseContract.RangeKalori.RK_COL_NAMA,
+                    DatabaseContract.RangeKalori.RK_COL_BERAT_SAJI,
+                    DatabaseContract.RangeKalori.RK_COL_KALORI,
+                    DatabaseContract.RangeKalori.RK_COL_KALORI_AWAL,
+                    DatabaseContract.RangeKalori.RK_COL_KALORI_AKHIR,
+                    DatabaseContract.RangeKalori.RK_COL_ID_PARENT
+            );
+    public static final String CREATE_TABLE_EXERCISE =
+            String.format("CREATE TABLE %s " +
+                            "(%s INTEGER PRIMARY KEY," +
+                            "%s INTEGER(1)," +
+                            "%s INTEGER(5)," +
+                            "%s INTEGER(5)," +
+                            "%s DECIMAL(10,2)," +
+                            "%s LONG(50), " +
+                            "%s LONG(50))",
+                    DatabaseContract.Exercise.TABLE_EXERCISE,
+                    DatabaseContract.Exercise._ID,
+                    DatabaseContract.Exercise.EXERCISE_COL_TYPE,
+                    DatabaseContract.Exercise.EXERCISE_COL_STEP,
+                    DatabaseContract.Exercise.EXERCISE_COL_DISTANCE,
+                    DatabaseContract.Exercise.EXERCISE_COL_CALORIES,
+                    DatabaseContract.Exercise.EXERCISE_COL_LENGTH_TIME,
+                    DatabaseContract.Exercise.EXERCISE_COL_START_DATE
+            );
+    public static final String INSERT_TABLE_RANGE_CALORIES = "";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -68,13 +106,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i(TAG,"Cerating database");
         db.execSQL(CREATE_TABLE_PENGGUNA);
         db.execSQL(CREATE_TABLE_NUTRISI);
+        db.execSQL(CREATE_TABLE_KALORI);
+        db.execSQL(CREATE_TABLE_EXERCISE);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.i(TAG,"Deleting Table");
-        db.execSQL("DELETE FROM " + DatabaseContract.Pengguna.TABLE_PENGGUNA);
-        db.execSQL("DELETE FROM " + DatabaseContract.Nutrisi.TABLE_NUTRISI);
+        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.Pengguna.TABLE_PENGGUNA);
+        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.Nutrisi.TABLE_NUTRISI);
+        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.RangeKalori.TABLE_RANGE_KALORI);
+        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.Exercise.TABLE_EXERCISE);
         onCreate(db);
     }
 }

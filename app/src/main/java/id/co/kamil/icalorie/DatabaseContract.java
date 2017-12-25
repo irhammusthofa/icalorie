@@ -30,4 +30,23 @@ public class DatabaseContract {
         public static final String PENGGUNA_COL_KELAMIN = "p_kelamin";
         public static final String PENGGUNA_COL_TELP = "p_telp";
     }
+    public class Exercise implements BaseColumns{
+        public static final String TABLE_EXERCISE = "tb_exercise";
+        public static final String EXERCISE_COL_TYPE = "e_type";
+        public static final String EXERCISE_COL_STEP = "e_step";
+        public static final String EXERCISE_COL_DISTANCE = "e_distance";
+        public static final String EXERCISE_COL_CALORIES = "e_calories";
+        public static final String EXERCISE_COL_LENGTH_TIME = "e_length_time";
+        public static final String EXERCISE_COL_START_DATE = "e_startdate";
+    }
+    public class RangeKalori implements BaseColumns{
+        public static final String TABLE_RANGE_KALORI = "tb_range_kalori";
+        public static final String RK_COL_NAMA = "rk_nama";
+        public static final String RK_COL_BERAT_SAJI = "rk_berat";
+        public static final String RK_COL_KALORI = "rk_kalori";
+        public static final String RK_COL_KALORI_AWAL = "rk_kalori_1";
+        public static final String RK_COL_KALORI_AKHIR = "rk_kalori_2";
+        public static final String RK_COL_ID_PARENT = "rk_id_parent";
+
+    }
 }

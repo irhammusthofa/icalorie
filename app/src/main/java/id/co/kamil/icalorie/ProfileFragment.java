@@ -74,20 +74,24 @@ public class ProfileFragment extends Fragment {
         txtGender = (TextView) view.findViewById(R.id.txtGender);
         txtEmail = (TextView) view.findViewById(R.id.txtEmail);
         txtTelepon = (TextView) view.findViewById(R.id.txtTelepon);
+        try {
+            Pengguna user;
+            user = session.getUserDetails();
 
-        Pengguna user;
-        user = session.getUserDetails();
-        txtNama.setText(user.getNama());
-        txtBerat.setText(user.getBerat() + " kg");
-        txtTinggi.setText(user.getTinggi() + " cm");
-        txtTgllahir.setText(user.getTgllahir());
-        if (user.getKelamin().equals("L")){
-            txtGender.setText("Laki-laki");
-        }else{
-            txtGender.setText("Laki-laki");
+            txtNama.setText(user.getNama());
+            txtBerat.setText(user.getBerat() + " kg");
+            txtTinggi.setText(user.getTinggi() + " cm");
+            txtTgllahir.setText(user.getTgllahir());
+            if (user.getKelamin().equals("L")){
+                txtGender.setText("Laki-laki");
+            }else{
+                txtGender.setText("Laki-laki");
+            }
+            txtEmail.setText(user.getEmail());
+            txtTelepon.setText(user.getTelepon());
+        }catch (Exception e){
+            Log.e(TAG,e.getMessage());
         }
-        txtEmail.setText(user.getEmail());
-        txtTelepon.setText(user.getTelepon());
         return view;
     }
 }

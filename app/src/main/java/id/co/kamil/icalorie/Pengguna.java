@@ -6,7 +6,7 @@ package id.co.kamil.icalorie;
 
 public class Pengguna {
     private int id;
-    private String nama,email,tgllahir,foto,berat,tinggi,kelamin,telepon;
+    private String nama,email,tgllahir,foto,berat,tinggi,kelamin,telepon, password;
 
     @Override
     public String toString() {
@@ -93,5 +93,13 @@ public class Pengguna {
 
     public void setTelepon(String telepon) {
         this.telepon = telepon;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

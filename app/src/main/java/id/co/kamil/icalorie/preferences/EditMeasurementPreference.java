@@ -1,4 +1,4 @@
-package name.bagi.levente.pedometer.preferences;
+package id.co.kamil.icalorie.preferences;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,11 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 
-/**
- * An {@link EditTextPreference} that is suitable for entering measurements.
- * It handles metric/imperial setting.
- * @author Levente Bagi
- */
+
 abstract public class EditMeasurementPreference extends EditTextPreference {
 	boolean mIsMetric;
 	

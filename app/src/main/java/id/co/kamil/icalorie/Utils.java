@@ -1,11 +1,11 @@
-package name.bagi.levente.pedometer;
-
-import java.util.Locale;
+package id.co.kamil.icalorie;
 
 import android.app.Service;
 import android.speech.tts.TextToSpeech;
 import android.text.format.Time;
 import android.util.Log;
+
+import java.util.Locale;
 
 public class Utils implements TextToSpeech.OnInitListener {
     private static final String TAG = "Utils";

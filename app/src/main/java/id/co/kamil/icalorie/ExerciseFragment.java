@@ -1,6 +1,9 @@
 package id.co.kamil.icalorie;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -8,29 +11,33 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 
-public class ExerciseFragment extends Fragment implements SensorEventListener {
+public class ExerciseFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private FloatingActionButton btnTambah;
+    private List<Exercise> list = new ArrayList<>();
+    private TextView txtInfo;
+    private ListView listExercise;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private SensorManager sensorManager;
-    private Sensor stepSensor;
-    private long steps = 0;
-    private TextView txtLangkah,txtJarak;
+    private DatabaseHelper dbHelper;
 
     public ExerciseFragment() {
         // Required empty public constructor
@@ -41,68 +48,77 @@ public class ExerciseFragment extends Fragment implements SensorEventListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-        stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-        if (stepSensor!=null){
-            Log.i(TAG,"Berhasil, Sensor ditemukan.");
-        }else{
-            Log.i(TAG,"Gagal, Sensor tidak ditemukan");
-        }
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        dbHelper = new DatabaseHelper(getContext());
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        sensorManager.registerListener(this,stepSensor,sensorManager.SENSOR_DELAY_FASTEST);
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        sensorManager.unregisterListener(this,stepSensor);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_exercise, container, false);
-        txtLangkah = (TextView) view.findViewById(R.id.txtLangkah);
-        txtJarak = (TextView) view.findViewById(R.id.txtJarak);
+        txtInfo = (TextView) view.findViewById(R.id.txtInfo);
+        listExercise = (ListView) view.findViewById(R.id.listExercise);
+
+        btnTambah = (FloatingActionButton) view.findViewById(R.id.btnTambah);
+        btnTambah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(),ExerciseActivity.class));
+            }
+        });
+
+        loadExercise();
+        displayExercise();
 
         return view;
     }
+    private void displayExercise(){
+        final ExerciseAdapter exerciseAdapter = new ExerciseAdapter(getContext(),list);
+        listExercise.setAdapter(exerciseAdapter);
+    }
+    private void loadExercise(){
+        list.clear();
+        txtInfo.setVisibility(View.GONE);
+        listExercise.setVisibility(View.GONE);
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+        final Cursor cursor = db.rawQuery(
+                String.format("SELECT * FROM %s ORDER BY %s DESC",DatabaseContract.Exercise.TABLE_EXERCISE,DatabaseContract.Exercise._ID),null
+        );
+        if (cursor!=null){
+            try {
+                if(cursor.moveToFirst()){
+                    listExercise.setVisibility(View.VISIBLE);
+                    do {
+                        final int type = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Exercise.EXERCISE_COL_TYPE));
+                        final long length = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Exercise.EXERCISE_COL_LENGTH_TIME));
+                        final long time = cursor.getLong(cursor.getColumnIndex(DatabaseContract.Exercise.EXERCISE_COL_START_DATE));
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        Sensor sensor = event.sensor;
-        float[] values = event.values;
-        int value = -1;
+                        final Exercise exercise = new Exercise();
+                        if (type == 1){
+                            exercise.setAktivitas(getString(R.string.exercise_type_running));
+                            exercise.setIcon(R.drawable.ic_directions_run_black_24dp);
+                        }else if(type==2){
+                            exercise.setAktivitas(getString(R.string.exercise_type_walking));
+                            exercise.setIcon(R.drawable.ic_directions_walk_black_24dp);
+                        }else{
+                            exercise.setAktivitas(getString(R.string.exercise_type_bicycling));
+                            exercise.setIcon(R.drawable.ic_directions_bike_black_24dp);
+                        }
+                        exercise.setW_length(length);
+                        exercise.setW_awal(time);
 
-        if (values.length > 0) {
-            value = (int) values[0];
+                        list.add(exercise);
+                    }while (cursor.moveToNext());
+                }else{
+                    Log.i(TAG,"Data Exercise tidak tersedia");
+                    txtInfo.setVisibility(View.VISIBLE);
+                }
+            }finally {
+                Log.i(TAG,"Cursor Close.");
+                cursor.close();
+            }
         }
-        Log.i(TAG,"Values :"+value);
-        if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
-            steps++;
-        }
-        Log.i(TAG,"Steps :"+steps);
+    }
 
-        txtLangkah.setText(String.valueOf(steps).toString());
-        txtJarak.setText(String.format("%.2f km",getDistanceRun(steps)));
-    }
-    public float getDistanceRun(long steps){
-        float distance = (float)(steps*78)/(float)100000;
-        return distance;
-    }
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 }
