@@ -105,7 +105,11 @@ public class MainActivity extends AppCompatActivity {
             session.login();
             finish();
         }
-        Id = Integer.valueOf(session.getId());
+        try{
+            Id = Integer.valueOf(session.getId());
+        }catch (Exception e){
+            Log.e(TAG,e.getMessage());
+        }
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_account_circle_black_24dp));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_queue_play_next_black_24dp));
