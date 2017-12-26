@@ -31,49 +31,50 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mSettings;
     private String Id;
-    private static final String INSERT_DATA_RANGE[] = {"INSERT INTO tb_range_kalori VALUES('1','pisang ','25','','0','25','0');",
-            "INSERT INTO tb_range_kalori VALUES('2','Apel','40','','0','25','0');",
-            "INSERT INTO tb_range_kalori VALUES('3','jeruk','50','','0','25','0');",
-            "INSERT INTO tb_range_kalori VALUES('4','ayam','40','','26','50','0');",
-            "INSERT INTO tb_range_kalori VALUES('5','Apel','80','','26','50','0');",
-            "INSERT INTO tb_range_kalori VALUES('6','kacang hijau','20','','26','50','0');",
-            "INSERT INTO tb_range_kalori VALUES('7','telur','60','','51','75','0');",
-            "INSERT INTO tb_range_kalori VALUES('8','tempe','50','','51','75','0');",
-            "INSERT INTO tb_range_kalori VALUES('9','daging sapi ','35','','51','75','0');",
-            "INSERT INTO tb_range_kalori VALUES('10','roti','40','','76','100','0');",
-            "INSERT INTO tb_range_kalori VALUES('11','nasi','50','','76','100','0');",
-            "INSERT INTO tb_range_kalori VALUES('12','biskuit','30','','76','100','0');",
-            "INSERT INTO tb_range_kalori VALUES('13','susu','200','125','101','125','0');",
-            "INSERT INTO tb_range_kalori VALUES('14','roti','30','60','101','126','13');",
-            "INSERT INTO tb_range_kalori VALUES('15','selai coklat','20','60','101','127','0');",
-            "INSERT INTO tb_range_kalori VALUES('16','nasi','50','90','126','150','15');",
-            "INSERT INTO tb_range_kalori VALUES('17','ayam','40','50','127','151','0');",
-            "INSERT INTO tb_range_kalori VALUES('18','jus (jambu biji)','100','50','128','152','17');",
-            "INSERT INTO tb_range_kalori VALUES('19','gula','26','100','151','153','0');",
-            "INSERT INTO tb_range_kalori VALUES('20','nasi','100','175','151','175','0');",
-            "INSERT INTO tb_range_kalori VALUES('21','roti','70','175','152','176','0');",
-            "INSERT INTO tb_range_kalori VALUES('22','biskuit','50','175','153','177','0');",
-            "INSERT INTO tb_range_kalori VALUES('23','nasi ','50','90','154','178','22');",
-            "INSERT INTO tb_range_kalori VALUES('24','telur','60','75','176','179','0');",
-            "INSERT INTO tb_range_kalori VALUES('25','nasi','50','90','176','200','24');",
-            "INSERT INTO tb_range_kalori VALUES('26','ayam','40','50','177','201','25');",
-            "INSERT INTO tb_range_kalori VALUES('27','minyak goreng','5','50','178','202','0');",
-            "INSERT INTO tb_range_kalori VALUES('28','roti','50','120','201','225','27');",
-            "INSERT INTO tb_range_kalori VALUES('29','telur','60','75','202','226','28');",
-            "INSERT INTO tb_range_kalori VALUES('30','minyak goreng','3','30','203','227','0');",
-            "INSERT INTO tb_range_kalori VALUES('31','roti','50','120','226','250','30');",
-            "INSERT INTO tb_range_kalori VALUES('32','telur','60','75','227','251','31');",
-            "INSERT INTO tb_range_kalori VALUES('33','minyak goreng','3','30','228','252','32');",
-            "INSERT INTO tb_range_kalori VALUES('34','tomat','30','','251','253','0');",
-            "INSERT INTO tb_range_kalori VALUES('35','nasi','70','120','251','275','34');",
-            "INSERT INTO tb_range_kalori VALUES('36','ayam','40','50','252','276','35');",
-            "INSERT INTO tb_range_kalori VALUES('37','minyak goreng','5','50','253','277','36');",
-            "INSERT INTO tb_range_kalori VALUES('38','pisang','50','50','254','278','0');",
-            "INSERT INTO tb_range_kalori VALUES('39','roti','50','120','276','300','38');",
-            "INSERT INTO tb_range_kalori VALUES('40','telur','60','75','277','301','39');",
-            "INSERT INTO tb_range_kalori VALUES('41','minyak goreng','3','30','278','302','40');",
-            "INSERT INTO tb_range_kalori VALUES('42','tomat','30','30','279','303','41');",
-            "INSERT INTO tb_range_kalori VALUES('43','mayonaise','10','30','301','304','0');"};
+    private static final String INSERT_DATA_RANGE[] = {
+            "INSERT INTO tb_range_kalori VALUES('1','1','pisang ','25','','0','25','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('2','2','Apel','40','','0','25','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('3','3','jeruk','50','','0','25','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('4','4','ayam','40','','26','50','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('5','5','Apel','80','','26','50','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('6','6','kacang hijau','20','','26','50','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('7','7','telur','60','','51','75','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('8','8','tempe','50','','51','75','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('9','9','daging sapi ','35','','51','75','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('10','10','roti','40','','76','100','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('11','11','nasi','50','','76','100','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('12','12','biskuit','30','','76','100','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('13','13','susu','200','125','101','125','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('14','14','roti','30','60','101','125','13','1');",
+            "INSERT INTO tb_range_kalori VALUES('15','15','selai coklat','20','60','101','125','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('16','16','nasi','50','90','126','150','15','1');",
+            "INSERT INTO tb_range_kalori VALUES('17','17','ayam','40','50','126','150','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('18','18','jus (jambu biji)','100','50','126','150','17','1');",
+            "INSERT INTO tb_range_kalori VALUES('19','19','gula','26','100','151','175','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('20','20','nasi','100','175','151','175','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('21','21','roti','70','175','151','175','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('22','22','biskuit','50','175','151','175','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('23','23','nasi ','50','90','151','175','22','1');",
+            "INSERT INTO tb_range_kalori VALUES('24','24','telur','60','75','176','200','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('25','25','nasi','50','90','176','200','24','1');",
+            "INSERT INTO tb_range_kalori VALUES('26','26','ayam','40','50','176','200','25','1');",
+            "INSERT INTO tb_range_kalori VALUES('27','27','minyak goreng','5','50','176','200','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('28','28','roti','50','120','201','225','27','1');",
+            "INSERT INTO tb_range_kalori VALUES('29','29','telur','60','75','201','225','28','1');",
+            "INSERT INTO tb_range_kalori VALUES('30','30','minyak goreng','3','30','201','225','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('31','31','roti','50','120','226','250','30','1');",
+            "INSERT INTO tb_range_kalori VALUES('32','32','telur','60','75','226','250','31','1');",
+            "INSERT INTO tb_range_kalori VALUES('33','33','minyak goreng','3','30','226','250','32','1');",
+            "INSERT INTO tb_range_kalori VALUES('34','34','tomat','30','','251','275','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('35','35','nasi','70','120','251','275','34','1');",
+            "INSERT INTO tb_range_kalori VALUES('36','36','ayam','40','50','251','275','35','1');",
+            "INSERT INTO tb_range_kalori VALUES('37','37','minyak goreng','5','50','251','275','36','1');",
+            "INSERT INTO tb_range_kalori VALUES('38','38','pisang','50','50','251','275','0','0');",
+            "INSERT INTO tb_range_kalori VALUES('39','39','roti','50','120','276','300','38','1');",
+            "INSERT INTO tb_range_kalori VALUES('40','40','telur','60','75','276','300','39','1');",
+            "INSERT INTO tb_range_kalori VALUES('41','41','minyak goreng','3','30','276','300','40','1');",
+            "INSERT INTO tb_range_kalori VALUES('42','42','tomat','30','30','276','300','41','1');",
+            "INSERT INTO tb_range_kalori VALUES('43','43','mayonaise','10','30','276','300','0','0');"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +92,13 @@ public class MainActivity extends AppCompatActivity {
         if (cursor != null){
             try{
                 if (cursor.moveToFirst()){
-                    Log.i(TAG, String.valueOf(cursor.getCount()));
+                    Log.i(TAG, "Count: " + String.valueOf(cursor.getCount()));
+                }else{
                     db.execSQL("DELETE FROM " + DatabaseContract.RangeKalori.TABLE_RANGE_KALORI);
                     int i;
                     for(i=0;i<INSERT_DATA_RANGE.length;i++){
                         db.execSQL(INSERT_DATA_RANGE[i]);
                     }
-                }else{
-                    Log.i(TAG,"Data tidak ditemukan");
                 }
             }finally {
                 Log.i(TAG,"cursor close");

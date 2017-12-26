@@ -48,6 +48,7 @@ public class DatabaseContract {
         public static final String RK_COL_KALORI_AWAL = "rk_kalori_1";
         public static final String RK_COL_KALORI_AKHIR = "rk_kalori_2";
         public static final String RK_COL_ID_PARENT = "rk_id_parent";
+        public static final String RK_COL_PARENT_TYPE = "rk_type_parent";
 
     }
 }

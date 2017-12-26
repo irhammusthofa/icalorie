@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TAG = "DatabaseHelper";
     public static final String DATABASE_NAME = "icalori.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String CREATE_TABLE_PENGGUNA =
             String.format("CREATE TABLE %s " +
                     "(%s INTEGER PRIMARY KEY," +
@@ -88,6 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "%s DECIMAL(10,2)," +
                     "%s DECIMAL(10,2)," +
                     "%s DECIMAL(10,2)," +
+                    "%s INTEGER," +
                     "%s INTEGER)",
                     DatabaseContract.RangeKalori.TABLE_RANGE_KALORI,
                     DatabaseContract.RangeKalori._ID,
@@ -97,7 +98,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     DatabaseContract.RangeKalori.RK_COL_KALORI,
                     DatabaseContract.RangeKalori.RK_COL_KALORI_AWAL,
                     DatabaseContract.RangeKalori.RK_COL_KALORI_AKHIR,
-                    DatabaseContract.RangeKalori.RK_COL_ID_PARENT
+                    DatabaseContract.RangeKalori.RK_COL_ID_PARENT,
+                    DatabaseContract.RangeKalori.RK_COL_PARENT_TYPE
             );
 
 
