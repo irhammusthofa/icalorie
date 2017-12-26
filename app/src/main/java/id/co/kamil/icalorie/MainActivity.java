@@ -105,11 +105,7 @@ public class MainActivity extends AppCompatActivity {
             session.login();
             finish();
         }
-        try{
-            Id = Integer.valueOf(session.getId());
-        }catch (Exception e){
-            Log.e(TAG,e.getMessage());
-        }
+
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_account_circle_black_24dp));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_queue_play_next_black_24dp));
@@ -192,9 +188,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_edit:
                 if (tabLayout.getSelectedTabPosition()==0){
-                    Intent intent = new Intent(this,EditProfileActivity.class);
-                    intent.putExtra("id",Id);
-                    startActivity(intent);
+                    try{
+                        Id = Integer.valueOf(session.getId());
+                        Intent intent = new Intent(this,EditProfileActivity.class);
+                        intent.putExtra("id",Id);
+                        startActivity(intent);
+                    }catch (Exception e){
+                        Log.e(TAG,e.getMessage());
+                    }
+
                 }
                 break;
             case R.id.menu_setting:

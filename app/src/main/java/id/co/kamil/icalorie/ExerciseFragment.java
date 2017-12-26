@@ -30,10 +30,8 @@ import static android.content.ContentValues.TAG;
 
 
 public class ExerciseFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "ExerciseFragment";
+
     private FloatingActionButton btnTambah;
     private List<Exercise> list = new ArrayList<>();
     private TextView txtInfo;
@@ -77,14 +75,14 @@ public class ExerciseFragment extends Fragment {
                 intent.putExtra("lengthTime",list.get(i).getW_length());
                 intent.putExtra("starTime",list.get(i).getW_awal());
                 intent.putExtra("typeForm",1);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent,2);
             }
         });
         btnTambah = (FloatingActionButton) view.findViewById(R.id.btnTambah);
         btnTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(),ExerciseActivity.class));
+                startActivityForResult(new Intent(getContext(),ExerciseActivity.class),2);
             }
         });
 
@@ -96,7 +94,7 @@ public class ExerciseFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
+        if (requestCode == 2) {
             if(resultCode == RESULT_OK) {
                 int stateSave = data.getIntExtra("stateSave",0);
                 Log.i(TAG,"Result Index : " + stateSave);

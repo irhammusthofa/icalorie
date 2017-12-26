@@ -31,6 +31,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static android.content.ContentValues.TAG;
+
 public class ExerciseActivity extends AppCompatActivity {
 
     private static final String TAG = "ExerciseActivity";
@@ -100,7 +102,8 @@ public class ExerciseActivity extends AppCompatActivity {
                 intent.putExtra("type",TypeExercise);
                 intent.putExtra("lengthTime",lengthTime);
                 intent.putExtra("startTime",currentDate);
-                startActivityForResult(intent,1);
+                intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                startActivity(intent);
                 finish();
             }
         });
@@ -183,6 +186,7 @@ public class ExerciseActivity extends AppCompatActivity {
         mIsRunning = mPedometerSettings.isServiceRunning();
         resetValues(true);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
