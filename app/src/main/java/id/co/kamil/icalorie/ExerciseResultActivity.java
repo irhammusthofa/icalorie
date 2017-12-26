@@ -160,7 +160,7 @@ public class ExerciseResultActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-                alBuilder.setNegativeButton("T*idak", new DialogInterface.OnClickListener() {
+                alBuilder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

@@ -21,6 +21,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private static final int REQUEST_CODE_EDIT_PROFILE = 5;
+
     private Menu menu=null;
     private TabLayout tabLayout;
     private SessionManager session;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private PedometerSettings mPedometerSettings;
 
     private SharedPreferences mSettings;
-    private int Id;
+    private String Id;
     private static final String INSERT_DATA_RANGE[] = {"INSERT INTO tb_range_kalori VALUES('1','pisang ','25','','0','25','0');",
             "INSERT INTO tb_range_kalori VALUES('2','Apel','40','','0','25','0');",
             "INSERT INTO tb_range_kalori VALUES('3','jeruk','50','','0','25','0');",
@@ -206,10 +208,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_edit:
                 if (tabLayout.getSelectedTabPosition()==0){
                     try{
-                        Id = Integer.valueOf(session.getId());
+                        Id = session.getId();
                         Intent intent = new Intent(this,EditProfileActivity.class);
                         intent.putExtra("id",Id);
-                        startActivity(intent);
+                        startActivityForResult(intent,REQUEST_CODE_EDIT_PROFILE);
                     }catch (Exception e){
                         Log.e(TAG,e.getMessage());
                     }

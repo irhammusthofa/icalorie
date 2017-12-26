@@ -19,7 +19,7 @@ import android.widget.Toast;
 public class EditProfileActivity extends AppCompatActivity {
     private static final String TAG = "EditProfileActivity";
     private DatabaseHelper dbHelper;
-    private EditText edtNama,edtBerat,edtTinggi,edtTglLahir,edtEmail,edtTelepon;
+    private EditText edtNama,edtBerat,edtTinggi,edtTglLahir,edtEmail,edtTelepon,edtPassword;
     private RadioButton laki,perempuan;
     private ImageView imgProfile;
     private Button btnSimpan,btnCamera,btnGallery;
@@ -34,11 +34,12 @@ public class EditProfileActivity extends AppCompatActivity {
         Id = getIntent().getStringExtra("id");
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         edtNama = (EditText) findViewById(R.id.edtNama);
-        edtBerat = (EditText) findViewById(R.id.edtNama);
-        edtTinggi = (EditText) findViewById(R.id.edtNama);
-        edtTglLahir = (EditText) findViewById(R.id.edtNama);
-        edtEmail = (EditText) findViewById(R.id.edtNama);
-        edtTelepon = (EditText) findViewById(R.id.edtNama);
+        edtTglLahir = (EditText) findViewById(R.id.edtTglLahir);
+        edtBerat = (EditText) findViewById(R.id.edtBerat);
+        edtTinggi = (EditText) findViewById(R.id.edtTinggi);
+        edtEmail = (EditText) findViewById(R.id.edtEmail);
+        edtTelepon = (EditText) findViewById(R.id.edtTelepon);
+        edtPassword = (EditText) findViewById(R.id.edtPassword);
         laki = (RadioButton) findViewById(R.id.optLaki);
         perempuan = (RadioButton) findViewById(R.id.optPerempuan);
 
@@ -71,46 +72,62 @@ public class EditProfileActivity extends AppCompatActivity {
                     values.put(DatabaseContract.Pengguna.PENGGUNA_COL_TGL_LAHIR,edtTglLahir.getText().toString());
                     values.put(DatabaseContract.Pengguna.PENGGUNA_COL_TELP,edtTelepon.getText().toString());
                     values.put(DatabaseContract.Pengguna.PENGGUNA_COL_KELAMIN,gender);
+                    if (!edtPassword.getText().toString().isEmpty()){
+                        values.put(DatabaseContract.Pengguna.PENGGUNA_COL_PASSWORD,edtPassword.getText().toString());
+                    }
                     Log.i(TAG,"Inserting data");
                     db.update(DatabaseContract.Pengguna.TABLE_PENGGUNA,values,String.format("%s = ?",DatabaseContract.Pengguna._ID),new String[]{Id});
                     Toast.makeText(getApplicationContext(),"Profile berhasil diupdate.",Toast.LENGTH_SHORT).show();
-
+                    Intent intent = new Intent();
+                    intent.putExtra("update",1);
+                    setResult(RESULT_OK,intent);
+                    finish();
                 }
             }
         });
         loadData();
     }
-    private void loadData(){
-        final String Id = getIntent().getStringExtra("Id");
 
+    private void loadData(){
 
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
         final Cursor cursor = db.rawQuery(String.format(
-                "SELECT * FROM %s WHERE %s=%s",DatabaseContract.Pengguna.TABLE_PENGGUNA,DatabaseContract.Pengguna._ID, Id
-        ),null);
-        if (cursor != null){
+                "SELECT * FROM %s WHERE %s=?",DatabaseContract.Pengguna.TABLE_PENGGUNA,
+                DatabaseContract.Pengguna._ID
+        ),new String[]{Id});
+        final Pengguna pengguna = new Pengguna();
+        if (cursor != null) {
             try {
-                if (cursor.moveToFirst()){
+                if (cursor.moveToFirst()) {
                     do {
-                        edtNama.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_NAMA)));
-                        edtBerat.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_BERAT)));
-                        edtTinggi.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_TINGGI)));
-                        edtTglLahir.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_TGL_LAHIR)));
-                        edtEmail.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_EMAIL)));
-                        edtTelepon.setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_TELP)));
-                        final String tmpGender = cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_KELAMIN));
-                        if (tmpGender.equals("L")){
+                        final String nama = cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_NAMA));
+                        final String email = cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_EMAIL));
+                        final String telepon = cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_TELP));
+                        final String kelamin = cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_KELAMIN));
+                        final String tgllahir = cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_TGL_LAHIR));
+                        final String berat = cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_BERAT));
+                        final String tinggi = cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_TINGGI));
+                        final String foto = cursor.getString(cursor.getColumnIndex(DatabaseContract.Pengguna.PENGGUNA_COL_FOTO));
+                        Log.i(TAG,kelamin);
+                        edtNama.setText(nama);
+                        edtBerat.setText(berat);
+                        edtTinggi.setText(tinggi);
+                        edtEmail.setText(email);
+                        edtTelepon.setText(telepon);
+                        edtTglLahir.setText(tgllahir);
+                        if (kelamin.equals("L")){
                             laki.setChecked(true);
-                        }else if (tmpGender.equals("P")){
+                        }else{
                             perempuan.setChecked(true);
                         }
-                    }while(cursor.moveToNext());
-                }else{
-                    Toast.makeText(this,"Maaf, Data dengan Id : " + Id + " tidak dapat ditemukan.",Toast.LENGTH_SHORT).show();
-                    finish();
+
+                    } while (cursor.moveToNext());
+
+                } else {
+                    Log.i(TAG, "User dengan Id '" + Id + "' tidak ditemukan");
                 }
-            }finally {
-                Log.i(TAG,"Close cursor");
+            } finally {
+                Log.i(TAG, "Cursor close");
                 cursor.close();
             }
         }

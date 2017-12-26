@@ -23,10 +23,12 @@
                 android:id="@+id/btnSimpan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Simpan"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card1" />
@@ -71,6 +73,7 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
 
                     <TextView
                         android:id="@+id/textView24"
@@ -230,6 +233,7 @@
                         android:id="@+id/textView47"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="Telepon"
                         app:layout_constraintStart_toStartOf="@+id/edtEmail"
                         app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
@@ -238,15 +242,36 @@
                         android:id="@+id/edtTelepon"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
                         android:layout_marginEnd="16dp"
                         android:ems="10"
                         android:hint="Telepon"
                         android:inputType="phone"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/textView47"
                         app:layout_constraintTop_toBottomOf="@+id/textView47" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Password"
+                        app:layout_constraintStart_toStartOf="@+id/edtTelepon"
+                        app:layout_constraintTop_toBottomOf="@+id/edtTelepon" />
+
+                    <EditText
+                        android:id="@+id/edtPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:ems="10"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView3"
+                        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.CardView>

@@ -1,6 +1,7 @@
 package id.co.kamil.icalorie;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class ProfileFragment extends Fragment {
@@ -74,6 +77,10 @@ public class ProfileFragment extends Fragment {
         txtGender = (TextView) view.findViewById(R.id.txtGender);
         txtEmail = (TextView) view.findViewById(R.id.txtEmail);
         txtTelepon = (TextView) view.findViewById(R.id.txtTelepon);
+        loadProfile();
+        return view;
+    }
+    private void loadProfile(){
         try {
             Pengguna user;
             user = session.getUserDetails();
@@ -92,6 +99,22 @@ public class ProfileFragment extends Fragment {
         }catch (Exception e){
             Log.e(TAG,e.getMessage());
         }
-        return view;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 5:
+                if(resultCode == RESULT_OK) {
+                    int stateSave = data.getIntExtra("update",0);
+                    Log.i(TAG,"Result Index : " + stateSave);
+                    if (stateSave==1){
+                        loadProfile();
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
