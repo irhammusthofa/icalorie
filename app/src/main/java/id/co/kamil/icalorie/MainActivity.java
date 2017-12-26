@@ -3,8 +3,10 @@ package id.co.kamil.icalorie;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -23,8 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private SessionManager session;
     private DatabaseHelper dbHelper;
-    private int Id;
+    private PedometerSettings mPedometerSettings;
 
+    private SharedPreferences mSettings;
+    private int Id;
     private static final String INSERT_DATA_RANGE[] = {"INSERT INTO tb_range_kalori VALUES('1','pisang ','25','','0','25','0');",
             "INSERT INTO tb_range_kalori VALUES('2','Apel','40','','0','25','0');",
             "INSERT INTO tb_range_kalori VALUES('3','jeruk','50','','0','25','0');",
@@ -140,6 +144,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        try{
+            Pengguna user;
+            user = session.getUserDetails();
+            float berat = Integer.parseInt(user.getBerat());
+            if (berat<=0) berat = 50;
+            mSettings = PreferenceManager.getDefaultSharedPreferences(this);
+            mPedometerSettings = new PedometerSettings(mSettings);
+            SharedPreferences.Editor editor = mSettings.edit();
+            editor.putString("body_weight", String.valueOf(berat));
+            editor.commit();
+        }catch (Exception e){
+            Log.e(TAG,e.getMessage());
+        }
     }
     private void changeMenu(int position){
         try {

@@ -107,35 +107,7 @@ public class ExerciseActivity extends AppCompatActivity {
                 finish();
             }
         });
-        btnMulai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (btnMulai.getText().equals("Start")){
-                    Calendar calendar = Calendar.getInstance();
-                    currentDate = calendar.getTimeInMillis();
-                    Log.i(TAG, String.valueOf(currentDate));
-                    StartTime = SystemClock.uptimeMillis();
 
-                    handler.postDelayed(runnable, 0);
-                    btnMulai.setText("Pause");
-                    btnStop.setEnabled(true);
-                    mulai();
-                    if (spAktivitas.isEnabled()){
-                        spAktivitas.setEnabled(false);
-                        int pos = spAktivitas.getSelectedItemPosition() + 1;
-                        TypeExercise = pos;
-                        caloriesCalculator = new CaloriesCalculator(46,pos);
-                    }
-                }else{
-                    TimeBuff += MillisecondTime;
-                    handler.removeCallbacks(runnable);
-                    berhentiSejenak();
-                    mCaloriesValueView.setText(String.format("%.2f",caloriesCalculator.Calculate(-1)));
-                    btnMulai.setText("Start");
-                    btnStop.setEnabled(true);
-                }
-            }
-        });
         spAktivitas = (Spinner) findViewById(R.id.spAktivitas);
         mStepValueView     = (TextView) findViewById(R.id.step_value);
         mPaceValueView     = (TextView) findViewById(R.id.pace_value);
@@ -180,6 +152,35 @@ public class ExerciseActivity extends AppCompatActivity {
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         mPedometerSettings = new PedometerSettings(mSettings);
 
+        btnMulai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (btnMulai.getText().equals("Start")){
+                    Calendar calendar = Calendar.getInstance();
+                    currentDate = calendar.getTimeInMillis();
+                    Log.i(TAG, String.valueOf(currentDate));
+                    StartTime = SystemClock.uptimeMillis();
+
+                    handler.postDelayed(runnable, 0);
+                    btnMulai.setText("Pause");
+                    btnStop.setEnabled(true);
+                    mulai();
+                    if (spAktivitas.isEnabled()){
+                        spAktivitas.setEnabled(false);
+                        int pos = spAktivitas.getSelectedItemPosition() + 1;
+                        TypeExercise = pos;
+                        caloriesCalculator = new CaloriesCalculator(mPedometerSettings.getBodyWeight(),pos);
+                    }
+                }else{
+                    TimeBuff += MillisecondTime;
+                    handler.removeCallbacks(runnable);
+                    berhentiSejenak();
+                    mCaloriesValueView.setText(String.format("%.2f",caloriesCalculator.Calculate(-1)));
+                    btnMulai.setText("Start");
+                    btnStop.setEnabled(true);
+                }
+            }
+        });
 
         mUtils.setSpeak(mSettings.getBoolean("speak", false));
         // Read from preferences if the service was running on the last onPause
