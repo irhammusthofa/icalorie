@@ -2,18 +2,23 @@ package id.co.kamil.icalorie;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,14 +27,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import static android.content.ContentValues.TAG;
@@ -79,6 +87,11 @@ public class ExerciseActivity extends AppCompatActivity {
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
 
+    private DatabaseHelper dbHelper;
+
+    private ListView uiListNutrisi;
+    private List<NutritionR> listNutrisi= new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +99,7 @@ public class ExerciseActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Exercise Mode");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        dbHelper = new DatabaseHelper(this);
 
         handler = new Handler() ;
         btnMulai = (Button) findViewById(R.id.btnStart);
@@ -98,16 +111,8 @@ public class ExerciseActivity extends AppCompatActivity {
                 handler.removeCallbacks(runnable);
                 berhentiSejenak();
                 mCaloriesValueView.setText(String.format("%.2f",caloriesCalculator.Calculate(-1)));
-                Intent intent = new Intent(getApplicationContext(),ExerciseResultActivity.class);
-                intent.putExtra("distance",mDistanceValue);
-                intent.putExtra("calories",mCaloriesValue);
-                intent.putExtra("steps",mStepValue);
-                intent.putExtra("type",TypeExercise);
-                intent.putExtra("lengthTime",lengthTime);
-                intent.putExtra("startTime",currentDate);
-                intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-                startActivity(intent);
-                finish();
+                showAlert();
+
             }
         });
 
@@ -172,7 +177,7 @@ public class ExerciseActivity extends AppCompatActivity {
                         spAktivitas.setEnabled(false);
                         int pos = spAktivitas.getSelectedItemPosition() + 1;
                         TypeExercise = pos;
-                        caloriesCalculator = new CaloriesCalculator(mPedometerSettings.getBodyWeight(),mPedometerSettings.getBodyHeight(), pos);
+                        caloriesCalculator = new CaloriesCalculator(mPedometerSettings.getBodyWeight(), pos);
                     }
                 }else{
                     TimeBuff += MillisecondTime;
@@ -190,7 +195,125 @@ public class ExerciseActivity extends AppCompatActivity {
         mIsRunning = mPedometerSettings.isServiceRunning();
         resetValues(true);
     }
+    private void showAlert(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View view = (View) layoutInflater.inflate(R.layout.list,null);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                showResult();
+            }
+        });
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                showResult();
+            }
+        });
+        alertDialog.setView(view);
+        uiListNutrisi = (ListView) view.findViewById(R.id.lv);
 
+        searchRangeKalori(mCaloriesValue);
+        displayRangeKalori();
+        alertDialog.setTitle("Rekomendasi Nutrisi");
+        alertDialog.show();
+
+    }
+    private void showResult(){
+        Intent intent = new Intent(getApplicationContext(),ExerciseResultActivity.class);
+        intent.putExtra("distance",mDistanceValue);
+        intent.putExtra("calories",mCaloriesValue);
+        intent.putExtra("steps",mStepValue);
+        intent.putExtra("type",TypeExercise);
+        intent.putExtra("lengthTime",lengthTime);
+        intent.putExtra("startTime",currentDate);
+        intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+        startActivity(intent);
+        finish();
+    }
+    private void displayRangeKalori(){
+        final NutritionRAdapter nutritionRAdapter = new NutritionRAdapter(this,listNutrisi);
+        uiListNutrisi.setAdapter(nutritionRAdapter);
+    }
+    private void searchRangeKalori(float kalori){
+        List<String> parentId = new ArrayList<String>(),
+                parentName = new ArrayList<String>(),
+                parentBerat = new ArrayList<String>();
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+        final String SQLQuery = String.format("SELECT * FROM %s WHERE %s="+0+" AND %s<="+ kalori +" AND %s>=" + kalori,
+                DatabaseContract.RangeKalori.TABLE_RANGE_KALORI,
+                DatabaseContract.RangeKalori.RK_COL_ID_PARENT,
+                DatabaseContract.RangeKalori.RK_COL_KALORI_AWAL,
+                DatabaseContract.RangeKalori.RK_COL_KALORI_AKHIR
+        );
+        Log.i(TAG,SQLQuery);
+        final Cursor cursor = db.rawQuery(SQLQuery,null);
+
+        if (cursor != null){
+            try{
+                if (cursor.moveToFirst()){
+                    do {
+                        final String kaloriId = cursor.getString(cursor.getColumnIndex(DatabaseContract.RangeKalori._ID));
+                        final String kaloriName = cursor.getString(cursor.getColumnIndex(DatabaseContract.RangeKalori.RK_COL_NAMA));
+                        final String kaloriBerat = cursor.getString(cursor.getColumnIndex(DatabaseContract.RangeKalori.RK_COL_BERAT_SAJI));
+                        parentName.add(kaloriName);
+                        parentBerat.add(kaloriBerat);
+                        parentId.add(kaloriId);
+                    }while (cursor.moveToNext());
+                }else{
+                    Log.i(TAG,"Data Range Kalori tidak tersedia");
+                }
+            }finally {
+                Log.i(TAG,"Cursor Close");
+                cursor.close();
+            }
+        }
+        Log.i(TAG,"Count RKalori ; " + parentId.size());
+        if(parentId.size()>0){
+            int i;
+
+            for (i=0;i<parentId.size();i++){
+                Log.i(TAG,"Parent Name : " + parentName.get(i));
+                String childName = "",
+                        childBerat = "";
+                final Cursor c = db.rawQuery(
+                        String.format("SELECT * FROM %s WHERE %s=?",
+                                DatabaseContract.RangeKalori.TABLE_RANGE_KALORI,
+                                DatabaseContract.RangeKalori.RK_COL_ID_PARENT),
+                        new String[]{String.valueOf(parentId.get(i))}
+                );
+                if (c != null){
+                    try{
+                        if (c.moveToFirst()){
+                            do {
+                                final String kaloriName = c.getString(c.getColumnIndex(DatabaseContract.RangeKalori.RK_COL_NAMA));
+                                final String kaloriBerat = c.getString(c.getColumnIndex(DatabaseContract.RangeKalori.RK_COL_BERAT_SAJI));
+                                if (!childName.isEmpty()){
+                                    childName +="\n";
+                                    childBerat +="\n";
+                                }
+                                childName += kaloriName;
+                                childBerat += kaloriBerat;
+                            }while (c.moveToNext());
+                            Log.i(TAG,"Child Name : " + childName);
+                        }else{
+                            Log.i(TAG,"Data Range Kalori tidak tersedia");
+                        }
+                    }finally {
+                        Log.i(TAG,"Cursor Close");
+                        c.close();
+                    }
+                }
+                final NutritionR nutritionR = new NutritionR();
+                nutritionR.setParentName(parentName.get(i));
+                nutritionR.setParentBerat(parentBerat.get(i));
+                nutritionR.setChildName(childName);
+                nutritionR.setChildBerat(childBerat);
+                listNutrisi.add(nutritionR);
+            }
+        }
+    }
     @Override
     public void onBackPressed()
     {
