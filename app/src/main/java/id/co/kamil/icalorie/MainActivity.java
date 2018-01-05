@@ -150,11 +150,14 @@ public class MainActivity extends AppCompatActivity {
             Pengguna user;
             user = session.getUserDetails();
             float berat = Integer.parseInt(user.getBerat());
+            float tinggi = Integer.parseInt(user.getTinggi());
             if (berat<=0) berat = 50;
+            if (tinggi<=0) tinggi = 150;
             mSettings = PreferenceManager.getDefaultSharedPreferences(this);
             mPedometerSettings = new PedometerSettings(mSettings);
             SharedPreferences.Editor editor = mSettings.edit();
             editor.putString("body_weight", String.valueOf(berat));
+            editor.putString("body_height", String.valueOf(tinggi));
             editor.commit();
         }catch (Exception e){
             Log.e(TAG,e.getMessage());

@@ -22,10 +22,12 @@ public class CaloriesCalculator {
     float Seconds,  Hours ;
     float calories = 0;
     float Weight;
+    float Height;
     int TypeActivity;
 
-    public  CaloriesCalculator(float Weight, int TypeActivity){
+    public  CaloriesCalculator(float Weight, float Height, int TypeActivity){
         this.Weight = Weight;
+        this.Height = Height;
         this.TypeActivity = TypeActivity;
     }
 
@@ -52,7 +54,7 @@ public class CaloriesCalculator {
 
             double DurationInHour = Seconds / 360;
 
-            calories += Mets * Weight * DurationInHour;
+            calories += (Mets/24) * Weight * Height * DurationInHour;
             //Mets = MetsTable(speed);
             Log.i(TAG, "Finish/Refresh  : " + Mets
                     + ". Calories " + calories
@@ -67,7 +69,7 @@ public class CaloriesCalculator {
 
             double DurationInHour = Seconds / 360;
 
-            calories += Mets * Weight * DurationInHour;
+            calories += (Mets/24) * Weight * Height * DurationInHour;
             Mets = mTable;
             Log.i(TAG,"[Diam] Mets Change : " + Mets
                     + ". Calories " + calories
@@ -82,7 +84,7 @@ public class CaloriesCalculator {
 
             double DurationInHour = Seconds / 360;
 
-            calories += Mets * Weight * DurationInHour;
+            calories += (Mets/24) * Weight * Height * DurationInHour;
             if (Mets == 0) Mets = 1;
             Mets = mTable;
             Log.i(TAG,"Mets Change : " + Mets

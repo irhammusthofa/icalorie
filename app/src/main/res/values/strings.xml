@@ -4,7 +4,22 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="notification_subtitle">Counting your steps</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
 
+    <string name="slide_1_title">Hello ...!!!</string>
+    <string name="slide_1_desc">Saat melakukan aktivitas fisik yang berat seperti workout atau berolahraga, tubuh Toppers akan kehilangan banyak nutrisi dan energi. Oleh karena itu, sudah seharusnya Toppers mengkonsumsi makanan tertentu sebagai pengganti energi yang terbakar saat berolahraga. Namun Toppers juga harus jeli dalam memilih makanan untuk dikonsumsi, karena jika salah dalam memilih makanan, tubuh kita akan kesulitan untuk mengembalikan kembali energi yang hilang.
+Oleh karena itu, sebaiknya Toppers mengetahui terlebih dahulu makanan-makanan apa saja yang sangat tidak dianjurkan untuk dikonsumsi setelah berolahraga. Simak yuk.</string>
+
+    <string name="slide_2_title">Makanan ringan dengan rasa asin</string>
+    <string name="slide_2_desc">Makanan ringan dengan rasa asin yang gurih memang disukai oleh semua kalangan. Namun tahukah Toppers, ternyata makanan tersebut dapat mengganggu pola diet dan olahraga yang kamu lakukan lho. Makanan asin memang dapat menambah potasium dalam tubuh yang banyak hilang melalui keringat yang kita keluarkan saat berolahraga. Namun perlu diingat bahwa sebagian besar dari makanan ringan tinggi akan kalori yang membuat konsumsi kalori kamu dalam sehari lebih besar dari yang diperlukan. Inilah yang akan membuat olahraga yang kamu lakukan akan menjadi sia-sia belaka. Nah sebagai pengganti potasium yang hilang setelah berolahraga, sebaiknya konsumsi buah pisang yang telah terbukti mengandung banyak potasium sebagai pengganti potasium yang banyak dikeluarkan oleh tubuh saat berolahraga.</string>
+
+    <string name="slide_3_title">Cokelat batang</string>
+    <string name="slide_3_desc">Selain enak, cokelat juga memiliki banyak manfaat bagi tubuh kita, beberapa diantaranya yaitu  memperbaiki mood, mencegah berkembangnya sel kanker dengan kandungan antioksidannya, serta membunuh radikal bebas. Namun makanan dengan rasa manis ini sangat tidak dianjurkan untuk dikonsumsi setelah berolahraga, karena kandungan kalorinya yang tinggi dan hanya akan membuat olahraga yang akan kamu lakukan sia-sia saja. Jika tidak bisa lepas dari makanan yang satu ini, kamu bisa mengkonsumsinya sebelum berolahraga, agar kalori dari coklat yang masuk ke dalam tubuh kamu bisa langsung terbakar saat berolahraga. Atau jika tetap ingin mengkonsumsi cokelat setelah berolahraga, konsumsilah dengan cara yang lain, seperti dengan membuat segelas coklat hangat atau coklat susu dengan menggunakan coklat bubuk yang kandungan lemak dan kalorinya lebih rendah.</string>
+
+    <string name="slide_4_title">Minuman manis dan bersoda</string>
+    <string name="slide_4_desc">Mengkonsumsi minuman manis dan bersoda hanya akan menggagalkan impian kamu untuk mendapatkan bentuk tubuh yang ideal. Hal tersebut karena selain tinggi akan kalori, soda dan makanan manis juga dapat memperlambat proses metabolisme tubuh, yang artinya proses pembakaran lemak pun akan terhambat pula. Selain itu, minuman bersoda juga dapat berakibat buruk bagi kesehatan kita jika dikonsumsi secara terus-menerus dalam jangka waktu yang panjang. Jika merasa haus setelah melakukan olahraga yang tentunya banyak menguras tenaga, sebaiknya konsumsi air putih, jus buah, dan teh tanpa tambahan gula. Minuman-minuman tersebut tentunya juga akan menghilangkan rasa haus yang kamu rasakan tanpa harus memberikan kalori berlebih bagi tubuh kamu.</string>
     <string name="started">Pedometer started.</string>
     <string name="stopped">Pedometer stopped.</string>
 

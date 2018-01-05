@@ -73,7 +73,7 @@ public class ExerciseFragment extends Fragment {
                 intent.putExtra("distance",list.get(i).getJarak());
                 intent.putExtra("steps",list.get(i).getLangkah());
                 intent.putExtra("lengthTime",list.get(i).getW_length());
-                intent.putExtra("starTime",list.get(i).getW_awal());
+                intent.putExtra("startTime",list.get(i).getW_awal());
                 intent.putExtra("typeForm",1);
                 startActivityForResult(intent,2);
             }

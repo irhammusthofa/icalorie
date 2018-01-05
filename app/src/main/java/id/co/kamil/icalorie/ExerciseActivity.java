@@ -169,7 +169,7 @@ public class ExerciseActivity extends AppCompatActivity {
                         spAktivitas.setEnabled(false);
                         int pos = spAktivitas.getSelectedItemPosition() + 1;
                         TypeExercise = pos;
-                        caloriesCalculator = new CaloriesCalculator(mPedometerSettings.getBodyWeight(),pos);
+                        caloriesCalculator = new CaloriesCalculator(mPedometerSettings.getBodyWeight(),mPedometerSettings.getBodyHeight(), pos);
                     }
                 }else{
                     TimeBuff += MillisecondTime;

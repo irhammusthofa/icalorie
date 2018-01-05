@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.co.kamil.icalorie">
-
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -16,18 +13,13 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".EditProfileActivity"
             android:label="Edit Profile" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".EditNutrisiActivity" />
-
         <activity
             android:name=".Settings"
             android:label="@string/activity_settings" />
@@ -35,9 +27,15 @@
         <service android:name=".StepService" />
 
         <activity android:name=".ExerciseActivity" />
-        <activity android:name=".ExActivity"/>
-        <activity android:name=".DaftarActivity"/>
-        <activity android:name=".ExerciseResultActivity"></activity>
+        <activity android:name=".DaftarActivity" />
+        <activity android:name=".ExerciseResultActivity" />
+        <activity android:name=".WelcomeActivity" android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
